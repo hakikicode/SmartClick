@@ -1,3 +1,6 @@
+smart click smart contract link  
+              https://sepolia-blockscout.lisk.com/tx/0xa6d9978fac09e2e60c450957c395ceba5441c3e76f152cc15516ae52c1658f44
+              
  Certainly! Here's a walkthrough documentation guide for the SmartClick game within the Smart Open Network project:
 ---
 # SmartClick Game Walkthrough
