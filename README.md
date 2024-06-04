@@ -1,3 +1,6 @@
+Smart is a Real Asset Project For Full Prodcution Deploymnent and Mainnet
+please dont copy my project and soon launching the game on html5 game platform plus additionnal features unvailing soon!
+
 smart click smart contract link  
               Others- https://sepolia-blockscout.lisk.com/tx/0xa6d9978fac09e2e60c450957c395ceba5441c3e76f152cc15516ae52c1658f44
               SmartClick Game- https://sepolia-blockscout.lisk.com/tx/0xcc12ccc7443dccaef60b0849fc6ed040b98d2a5b1a22094806b1880189c27b07
