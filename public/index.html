@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartClick Game!</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <h1>SmartClick Game!</h1>
+        <div id="game">
+            <div id="info">
+                <p id="token-click"><img src="token-icon.png" alt="Token Icon" class="icon"> <span>0</span></p>
+                <p id="level"><img src="level-icon.png" alt="Level Icon" class="icon"> <span>1</span></p>
+                <p id="bonus"><img src="bonus-icon.png" alt="Bonus Icon" class="icon"> <span>0</span></p>
+            </div>
+            <div id="reward-box" onclick="collectReward()">Unlimited Token for 5 seconds!</div>
+            <div id="tapArea"></div>
+        </div>
+        <button id="referral-button" class="referral-btn" onclick="generateReferral()"><i class="fas fa-link"></i> Generate Referral Link</button>
+        <div id="mobile-menu">
+            <button onclick="startGame()"><i class="fas fa-play"></i><span>Play</span></button>
+            <button onclick="inviteFriend()"><i class="fas fa-user-friends"></i><span>Invite</span></button>
+            <button onclick="showTasks()"><i class="fas fa-tasks"></i><span>Tasks</span></button>
+        </div>
+        <div id="referral-container"></div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
