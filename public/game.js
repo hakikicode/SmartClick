@@ -1,3 +1,6 @@
+var url = new URL(location.href);
+var playerid = url.searchParams.get("id");
+
 let userId = 'user123'; // This should be dynamic in a real app
 let taps = 0;
 let score = 0;
@@ -132,6 +135,13 @@ function updateScoreOnServer(taps, score, level, bonus) {
     .then(response => response.json())
     .then(data => console.log('Score updated:', data))
     .catch(error => console.error('Error:', error));
+
+    // Submit highscore to Telegram
+var xmlhttp = new XMLHttpRequest();
+var url = "https://smart-click-game.vercel.app//update-score/" + level  +
+"?id=" + playerid;
+xmlhttp.open("GET", url, true);
+xmlhttp.send();
 }
 
 // Function to start the game
