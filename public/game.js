@@ -125,7 +125,7 @@ function updateUI() {
 
 // Function to update score on the server
 function updateScoreOnServer(taps, score, level, bonus) {
-    fetch('/update-score', {
+    fetch('update-score', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -138,7 +138,7 @@ function updateScoreOnServer(taps, score, level, bonus) {
 
     // Submit highscore to Telegram
 var xmlhttp = new XMLHttpRequest();
-var url = "https://smart-click-game.vercel.app//update-score/" + level  +
+var url = "update-score" + level  +
 "?id=" + playerid;
 xmlhttp.open("GET", url, true);
 xmlhttp.send();
