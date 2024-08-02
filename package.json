@@ -1,16 +1,36 @@
 {
-  "name": "server",
+  "name": "smartclick",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "description": "a smart decentralized open network with play to earn games",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
-  "keywords": [],
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hakikicode/SmartClick.git"
+  },
+  "keywords": [
+    "smart",
+    "open",
+    "network",
+    "play",
+    "earn",
+    "game",
+    "token",
+    "smart",
+    "token"
+  ],
+  "author": "HakikiTech",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hakikicode/SmartClick/issues"
+  },
+  "homepage": "https://github.com/hakikicode/SmartClick#readme",
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "install": "^0.13.0",
+    "node-telegram-bot-api": "^0.66.0"
   }
 }

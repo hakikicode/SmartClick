@@ -1,0 +1,28 @@
+const { Telegraf } = require('telegraf');
+const Web3 = require('web3');
+const bot = new Telegraf('YOUR_TELEGRAM_BOT_TOKEN');
+
+// Connect to Ethereum
+const web3 = new Web3('https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID');
+const nativeTokenContract = new web3.eth.Contract(NativeTokenABI, 'NATIVE_TOKEN_CONTRACT_ADDRESS');
+
+bot.start((ctx) => ctx.reply('Welcome to TapTap Game! Earn tokens by tapping the screen.'));
+
+bot.command('tap', async (ctx) => {
+    // Logic to count taps and reward users
+    const userAddress = await getUserAddress(ctx.from.id);
+    const rewardAmount = calculateReward();
+    await nativeTokenContract.methods.mint(userAddress, rewardAmount).send({ from: 'YOUR_WALLET_ADDRESS' });
+
+    ctx.reply(`You earned ${rewardAmount} NTK!`);
+});
+
+function getUserAddress(userId) {
+    // Retrieve Ethereum address associated with the Telegram user ID
+}
+
+function calculateReward() {
+    // Calculate the reward amount based on game logic
+}
+
+bot.launch();

@@ -1,6 +1,3 @@
-var url = new URL(location.href);
-var playerid = url.searchParams.get("id");
-
 let userId = 'user123'; // This should be dynamic in a real app
 let taps = 0;
 let score = 0;
@@ -8,6 +5,8 @@ let level = 1;
 let bonus = 0;
 let isRewardActive = false;
 let bonusInterval;
+let fallingCoinsInterval;
+let bonusRainTimeout;
 
 const tapArea = document.getElementById('tapArea');
 const tokenClickDisplay = document.querySelector('#token-click span');
@@ -16,33 +15,24 @@ const bonusDisplay = document.querySelector('#bonus span');
 const rewardBox = document.getElementById('reward-box');
 const referralButton = document.getElementById('referral-button');
 
+var url = new URL(location.href);
+var playerid = url.searchParams.get("id");
+
 // Function to create a falling coin
 function createFallingCoin() {
     const coin = document.createElement('img');
     coin.src = 'icon.png'; // Ensure the icon.png is in the same directory
     coin.className = 'coin';
     coin.style.left = Math.random() * (tapArea.clientWidth - 50) + 'px';
-    coin.style.top = '-50px';
+    coin.style.top = '-50px'; // Start above the visible area
     coin.addEventListener('click', handleTap);
     tapArea.appendChild(coin);
     animateCoin(coin);
-}
 
-// Function to create a falling bonus icon
-function createFallingBonusIcon() {
-    const bonusIcon = document.createElement('img');
-    bonusIcon.src = 'bonus-icon.png'; // Ensure the bonus-icon.png is in the same directory
-    bonusIcon.className = 'coin';
-    bonusIcon.style.left = Math.random() * (tapArea.clientWidth - 50) + 'px';
-    bonusIcon.style.top = '-50px';
-    bonusIcon.addEventListener('click', handleBonusTap);
-    tapArea.appendChild(bonusIcon);
-    animateCoin(bonusIcon);
-}
-
-// Function to animate the falling coin or bonus icon
+    // Animate the coin falling
 function animateCoin(coin) {
-    const duration = Math.random() * 3 + 3;
+    const fallDuration = Math.random() * 3 + 3; // Random duration between 1 and 3 seconds
+    coin.style.transition = `top ${fallDuration}s linear`;
     const keyframes = [
         { transform: 'translateY(0)' },
         { transform: `translateY(${tapArea.clientHeight + 50}px)` }
@@ -55,6 +45,48 @@ function animateCoin(coin) {
     animation.onfinish = () => {
         tapArea.removeChild(coin);
     };
+    setTimeout(() => {
+        coin.style.top = '450px'; // End below the visible area
+    }, 0);
+}
+    // Social media
+    function shareOnSocialMedia() {
+        const url = 'https://smart-click-game.vercel.app/';
+        const text = `I scored ${score} points on SmartClick! Can you beat my score?`;
+        window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+    }
+    
+    // Remove coin after it has fallen
+    setTimeout(() => {
+        if (coin.parentElement === tapArea) {
+            tapArea.removeChild(coin);
+        }
+    }, fallDuration * 1000);
+}
+
+// Function to create a falling bonus icon
+function createFallingBonusIcon() {
+    const bonusIcon = document.createElement('img');
+    bonusIcon.src = 'bonus-icon.png'; // Ensure the bonus-icon.png is in the same directory
+    bonusIcon.className = 'coin';
+    bonusIcon.style.left = Math.random() * (tapArea.clientWidth - 50) + 'px';
+    bonusIcon.style.top = '-50px'; // Start above the visible area
+    bonusIcon.addEventListener('click', handleBonusTap);
+    tapArea.appendChild(bonusIcon);
+
+    // Animate the bonus icon falling
+    const fallDuration = Math.random() * 3 + 3; // Random duration between 1 and 3 seconds
+    bonusIcon.style.transition = `top ${fallDuration}s linear`;
+    setTimeout(() => {
+        bonusIcon.style.top = '450px'; // End below the visible area
+    }, 0);
+
+    // Remove bonus icon after it has fallen
+    setTimeout(() => {
+        if (bonusIcon.parentElement === tapArea) {
+            tapArea.removeChild(bonusIcon);
+        }
+    }, fallDuration * 1000);
 }
 
 // Function to handle taps on coins
@@ -63,17 +95,17 @@ function handleTap(event) {
     score += incrementValue;
     taps++;
     showIncrement(event.clientX, event.clientY, incrementValue);
-    if (score >= level * 15000) {
+    if (score >= level * 150000) {
         showRewardBox();
     }
-    if (score >= level * 10000) {
+    if (score >= level * 100000) {
         level++;
         score = 0;
         alert(`Congratulations! You've reached level ${level}!`);
     }
     updateUI();
     updateScoreOnServer(taps, score, level, bonus);
-    tapArea.removeChild(event.target);
+    event.target.remove();
 }
 
 // Function to handle taps on bonus icons
@@ -82,7 +114,7 @@ function handleBonusTap(event) {
     showIncrement(event.clientX, event.clientY, 1, 'bonus');
     updateUI();
     updateScoreOnServer(taps, score, level, bonus);
-    tapArea.removeChild(event.target);
+    event.target.remove();
 }
 
 // Function to show increment animation
@@ -116,6 +148,89 @@ function collectReward() {
     }, 5000);
 }
 
+// Ensure to include Web3.js in your HTML file
+// <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+
+let web3;
+let smartToken;
+let presaleContract;
+let airdropContract;
+
+const tokenAddress = 'YOUR_SMART_TOKEN_CONTRACT_ADDRESS';
+const presaleAddress = 'YOUR_PRESALE_CONTRACT_ADDRESS';
+const airdropAddress = 'YOUR_AIRDROP_CONTRACT_ADDRESS';
+
+async function initializeWeb3() {
+    if (window.ethereum) {
+        web3 = new Web3(window.ethereum);
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
+    } else {
+        console.log('No Ethereum provider detected. Install MetaMask.');
+        return;
+    }
+
+    const accounts = await web3.eth.getAccounts();
+    const user = accounts[0];
+
+    smartToken = new web3.eth.Contract(SmartTokenABI, tokenAddress);
+    presaleContract = new web3.eth.Contract(PresaleContractABI, presaleAddress);
+    airdropContract = new web3.eth.Contract(AirdropContractABI, airdropAddress);
+
+    // Load user data from the smart contract
+    const userData = await smartClickGame.methods.getUser(user).call();
+    score = userData[0];
+    bonus = userData[1];
+    level = userData[2];
+    tokenClickDisplay.textContent = score;
+    levelDisplay.textContent = level;
+    bonusDisplay.textContent = bonus;
+    updateProgressBar();
+}
+
+async function handleTap(event) {
+    try {
+        const accounts = await web3.eth.getAccounts();
+        const user = accounts[0];
+        
+        await smartClickGame.methods.clickCoin().send({ from: user });
+
+        // Load updated user data from the smart contract
+        const userData = await smartClickGame.methods.getUser(user).call();
+        score = userData[0];
+        bonus = userData[1];
+        level = userData[2];
+        const tokensMinted = userData[3];
+        
+        tokenClickDisplay.textContent = score;
+        levelDisplay.textContent = level;
+        bonusDisplay.textContent = bonus;
+
+        const increment = document.createElement('div');
+        increment.className = 'increment score';
+        increment.textContent = `+${incrementValue}`;
+        increment.style.left = event.clientX - tapArea.offsetLeft + 'px';
+        increment.style.top = event.clientY - tapArea.offsetTop + 'px';
+        tapArea.appendChild(increment);
+
+        setTimeout(() => {
+            tapArea.removeChild(increment);
+        }, 1000);
+
+        coinSound.play();
+
+        event.target.remove(); // Remove the tapped coin
+
+        // Update the progress bar
+        updateProgressBar();
+
+    } catch (error) {
+        console.error('Error interacting with the smart contract:', error);
+    }
+}
+
+// Initialize Web3 when the window loads
+window.addEventListener('load', initializeWeb3);
+
 // Function to update the UI
 function updateUI() {
     tokenClickDisplay.innerText = score;
@@ -125,7 +240,7 @@ function updateUI() {
 
 // Function to update score on the server
 function updateScoreOnServer(taps, score, level, bonus) {
-    fetch('update-score', {
+    fetch('/update-score', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -135,33 +250,31 @@ function updateScoreOnServer(taps, score, level, bonus) {
     .then(response => response.json())
     .then(data => console.log('Score updated:', data))
     .catch(error => console.error('Error:', error));
+}
 
-    // Submit highscore to Telegram
+// Update score to Telegram
 var xmlhttp = new XMLHttpRequest();
-var url = "update-score" + level  +
+var url = "https://smart-click-game.vercel.app/update-score/" + distance  +
 "?id=" + playerid;
 xmlhttp.open("GET", url, true);
 xmlhttp.send();
-}
 
 // Function to start the game
 function startGame() {
-    setInterval(createFallingCoin, 1000);
-    setTimeout(() => {
-        startBonusRain();
-    }, 120000); // 2 minutes for level 1
+    fallingCoinsInterval = setInterval(createFallingCoin, 1000);
+    setTimeout(startBonusRain, 120000); // 2 minutes for level 1
 }
 
 // Function to start the bonus rain
 function startBonusRain() {
     const bonusRainInterval = setInterval(createFallingBonusIcon, 1000);
+    const randomInterval = Math.random() * 30000 + 120000; // Random interval between 2 and 5 minutes
     setTimeout(() => {
         clearInterval(bonusRainInterval);
-        if (level > 1) {
-            setTimeout(startBonusRain, 300000); // 5 minutes for other levels
-        }
-    }, 5000); // Bonus rain for 5 seconds
+        bonusRainTimeout = setTimeout(startBonusRain, randomInterval);
+    }, 5000);
 }
+
 
 // Function to invite a friend
 function inviteFriend() {
@@ -180,6 +293,51 @@ function generateReferral() {
     navigator.clipboard.writeText(referralLink).then(() => {
         alert("Referral link copied to clipboard!");
     });
+}
+// Update progress bar in updateUI function
+function updateUI() {
+    tokenClickDisplay.innerText = score;
+    levelDisplay.innerText = level;
+    bonusDisplay.innerText = bonus;
+
+    // Update progress bar
+    const progress = (score / (level * 10000)) * 100;
+    document.getElementById('progress').style.width = progress + '%';
+}
+
+
+// Play sound when a coin is clicked
+function handleTap(event) {
+    const incrementValue = isRewardActive ? 10 : 1;
+    score += incrementValue;
+    taps++;
+    showIncrement(event.clientX, event.clientY, incrementValue);
+    if (score >= level * 15000) {
+        showRewardBox();
+    }
+    if (score >= level * 10000) {
+        level++;
+        score = 0;
+        alert(`Congratulations! You've reached level ${level}!`);
+    }
+    updateUI();
+    updateScoreOnServer(taps, score, level, bonus);
+    event.target.remove();
+
+    // Play sound
+    document.getElementById('coin-sound').play();
+}
+
+// Play sound when a bonus icon is clicked
+function handleBonusTap(event) {
+    bonus++;
+    showIncrement(event.clientX, event.clientY, 1, 'bonus');
+    updateUI();
+    updateScoreOnServer(taps, score, level, bonus);
+    event.target.remove();
+
+    // Play bonus sound
+    document.getElementById('bonus-sound').play();
 }
 
 // Start the game when the DOM is loaded
