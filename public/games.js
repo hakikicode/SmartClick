@@ -1,4 +1,4 @@
-let userId = 'user123'; // This should be dynamic in a real app
+let userId = 'Hey @${data.username}! 🌟 You have ${data.coinCount} SMART.'; // This should be dynamic in a real app
 let taps = 0;
 let score = 0;
 let level = 1;
@@ -44,6 +44,23 @@ function animateCoin(coin) {
         }
     });
 }
+
+        // Disable pinch-to-zoom
+        document.addEventListener('touchmove', function(event) {
+            if (event.scale !== 1) {
+                event.preventDefault();
+            }
+        }, { passive: false });
+
+        // Disable double-tap zoom
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
 
 // Function to create a falling bonus icon
 function createFallingBonusIcon() {
