@@ -31,14 +31,14 @@ function createFallingCoin() {
 
     // Animate the coin falling
 function animateCoin(coin) {
-    const fallDuration = Math.random() * 3 + 3; // Random duration between 1 and 3 seconds
+    const fallDuration = Math.random() * 1 + 1; // Random duration between 1 and 3 seconds
     coin.style.transition = `top ${fallDuration}s linear`;
     const keyframes = [
         { transform: 'translateY(0)' },
         { transform: `translateY(${tapArea.clientHeight + 50}px)` }
     ];
     const options = {
-        duration: duration * 1000,
+        duration: duration * 2000,
         easing: 'linear',
     };
     const animation = coin.animate(keyframes, options);
@@ -51,7 +51,7 @@ function animateCoin(coin) {
 }
     // Social media
     function shareOnSocialMedia() {
-        const url = 'https://smart-click-game.vercel.app/';
+        const url = 'https://t.me/SmartClickingbot';
         const text = `I scored ${score} points on SmartClick! Can you beat my score?`;
         window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
     }
@@ -61,7 +61,7 @@ function animateCoin(coin) {
         if (coin.parentElement === tapArea) {
             tapArea.removeChild(coin);
         }
-    }, fallDuration * 1000);
+    }, fallDuration * 2000);
 }
 
 // Function to create a falling bonus icon
@@ -75,7 +75,7 @@ function createFallingBonusIcon() {
     tapArea.appendChild(bonusIcon);
 
     // Animate the bonus icon falling
-    const fallDuration = Math.random() * 3 + 3; // Random duration between 1 and 3 seconds
+    const fallDuration = Math.random() * 1 + 1; // Random duration between 1 and 3 seconds
     bonusIcon.style.transition = `top ${fallDuration}s linear`;
     setTimeout(() => {
         bonusIcon.style.top = '450px'; // End below the visible area
@@ -86,7 +86,7 @@ function createFallingBonusIcon() {
         if (bonusIcon.parentElement === tapArea) {
             tapArea.removeChild(bonusIcon);
         }
-    }, fallDuration * 1000);
+    }, fallDuration * 2000);
 }
 
 // Function to handle taps on coins
@@ -95,10 +95,10 @@ function handleTap(event) {
     score += incrementValue;
     taps++;
     showIncrement(event.clientX, event.clientY, incrementValue);
-    if (score >= level * 150000) {
+    if (score >= level * 15000000) {
         showRewardBox();
     }
-    if (score >= level * 100000) {
+    if (score >= level * 10000000) {
         level++;
         score = 0;
         alert(`Congratulations! You've reached level ${level}!`);
@@ -289,7 +289,7 @@ function showTasks() {
 
 // Function to generate referral link
 function generateReferral() {
-    const referralLink = `http://localhost:3000/referral?userId=${userId}`;
+    const referralLink = `https://telegram.me/share/url?url=Join%20SmartClick%20using%20my%20referral%20link%3A%20https%3A%2F%2Ft.me/SmartClickingbot?startapp=ref_${generateRandomID()}`;
     navigator.clipboard.writeText(referralLink).then(() => {
         alert("Referral link copied to clipboard!");
     });
