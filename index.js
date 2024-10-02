@@ -16,7 +16,7 @@ const queries = {};
 server.use(express.static(path.join(__dirname, 'public')));
 
 // Replace 'YOUR_VERCEL_DEPLOYED_URL' with the actual URL of your deployed Vercel app.
-const webhookUrl = 'https://smart-click-game.vercel.app//api/telegram-bot';
+const webhookUrl = 'https://smart-click-game.vercel.app/api/telegram-bot';
 bot.setWebHook(webhookUrl);
 
 server.use((req, res, next) => {
