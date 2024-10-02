@@ -153,6 +153,12 @@ h1 {
     color: gold;
 }
 
+/* Zoom Disabled */
+body, html {
+    touch-action: manipulation;
+}
+
+
 /* Button styles */
 button {
     background-color: #4caf50;
