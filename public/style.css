@@ -245,3 +245,46 @@ button:hover {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
     transform: translateY(-2px);
 }
+
+/* Adjustments for small devices (phones) */
+@media (max-width: 499px) {
+    body {
+        padding: 9px; /* Add some padding to body */
+    }
+
+    .game-container {
+        padding: 14px;
+        font-size: 13px; /* Smaller font size */
+    }
+
+    header {
+        padding: 4px;
+    }
+
+    #header-content {
+        flex-direction: column; /* Stack items vertically */
+    }
+
+    #username, #welcome-message {
+        font-size: 11px; /* Further reduce font size */
+    }
+
+    #leaderboard {
+        width: 100%; /* Full width for smaller screens */
+        right: 0; /* Align to the left */
+        top: 0; /* Adjust positioning */
+    }
+
+    #tasksList li {
+        font-size: 11px; /* Adjust task list item font size */
+    }
+
+    .icon {
+        width: 29px; /* Smaller icon size */
+        height: 29px;
+    }
+
+    button {
+        font-size: 13px; /* Adjust button font size */
+    }
+}
