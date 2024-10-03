@@ -180,6 +180,31 @@ button:hover {
     border: 2px solid #4caf50;
 }
 
+/* Adjustments for medium-sized devices (tablets) */
+@media (max-width: 767px) {
+    header {
+        padding: 7px;
+    }
+
+    .game-container {
+        padding: 19px;
+        font-size: 14px;
+    }
+
+    #header-content {
+        flex-direction: column; /* Stack items vertically on smaller screens */
+        align-items: flex-start; /* Align items to the start */
+    }
+
+    #leaderboard {
+        width: 90%; /* Make it more flexible */
+        right: 5%; /* Adjust positioning */
+    }
+
+    .mobile-menu button {
+        font-size: 15px; /* Adjust button font size */
+    }
+}
 
 /* Add styles for progress bar */
 #progress-bar {
