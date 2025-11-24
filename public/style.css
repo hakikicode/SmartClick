@@ -1,290 +1,68 @@
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    background: linear-gradient(to right, #1c92d2, #f2fcfe);
-    overflow: hidden;
-}
-
-.container {
     text-align: center;
-    background: white;
-    padding: 43px;
-    border-radius: 31px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: white;
+}
+
+#game-container {
+    margin-top: 20px;
+}
+
+#game-area {
     width: 90%;
-    max-width: 814px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-h1 {
-    margin: 0 0 20px;
-    color: #333;
-    font-size: 2em;
-    font-weight: bold;
-    background: linear-gradient(to right, #f953c6, #b91d73);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-#game {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-#info {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-#info p {
-    display: flex;
-    align-items: center;
-    font-size: 1.2em;
-    margin: 0;
-    color: #333;
-    font-weight: bold; /* Make score text bold */
-}
-
-#info .icon {
-    width: 24px;
-    height: 24px;
-    margin-right: 5px;
-}
-
-#tapArea {
-    width: 90%;
-    height: 380px;
-    background: #eee;
-    border: 2px dashed #ccc;
+    height: 400px;
+    border: 2px solid white;
+    margin: 20px auto;
     position: relative;
     overflow: hidden;
+    background-color: black;
 }
 
-.coin {
+.token {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    background-image: url('icon.png');
+    background-size: cover;
+}
+
+.bonus {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    background-image: url('bonus-icon.png');
+    background-size: cover;
+}
+
+.cloud {
     width: 50px;
     height: 50px;
     position: absolute;
-    cursor: pointer;
-    animation: fall linear infinite;
+    background-image: url('4.png');
+    background-size: cover;
 }
 
-@keyframes fall {
-    from { transform: translateY(-50px); }
-    to { transform: translateY(450px); }
+#menu {
+    margin-top: 20px;
 }
 
-.increment {
-    position: absolute;
-    font-weight: bold;
-    color: red;
-    animation: moveUp 1s ease-out;
-    z-index: 10; /* Ensure increment is visible */
-}
-
-@keyframes moveUp {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(-20px); opacity: 0; }
-}
-
-#mobile-menu {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    background: #fff;
-    border-top: 1px solid #ccc;
-    padding: 10px 0;
-}
-
-#mobile-menu button {
-    background: none;
-    border: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 1em;
-    color: #333;
-    cursor: pointer;
-}
-
-#mobile-menu button i {
-    font-size: 1.5em;
-    margin-bottom: 5px;
-}
-
-/* Ensure elements are clickable on mobile */
-@media (max-width: 499px) {
-    button {
-        padding: 7px 14px;
-        font-size: 11px;
-    }
-
-    #tapArea {
-        height: 60vh;
-    }
-}
-
-/* Update increment position in CSS */
-.increment {
-    position: absolute;
-    animation: fadeOut 1s forwards;
-    font-size: 18px;
-    color: red;
-}
-
-.increment.score {
-    top: -30px; /* Adjust position above the coin */
-}
-
-.increment.bonus {
-    top: -30px; /* Adjust position above the coin */
-    color: gold;
-}
-
-/* Zoom Disabled */
-body, html {
-    touch-action: manipulation;
-}
-
-
-/* Button styles */
 button {
-    background-color: #4caf50;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    transition-duration: 0.4s;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: white;
-    color: black;
-    border: 2px solid #4caf50;
-}
-
-/* Adjustments for medium-sized devices (tablets) */
-@media (max-width: 767px) {
-    header {
-        padding: 7px;
-    }
-
-    .game-container {
-        padding: 19px;
-        font-size: 14px;
-    }
-
-    #header-content {
-        flex-direction: column; /* Stack items vertically on smaller screens */
-        align-items: flex-start; /* Align items to the start */
-    }
-
-    #leaderboard {
-        width: 90%; /* Make it more flexible */
-        right: 5%; /* Adjust positioning */
-    }
-
-    .mobile-menu button {
-        font-size: 15px; /* Adjust button font size */
-    }
-}
-
-/* Add styles for progress bar */
-#progress-bar {
-    width: 100%;
-    height: 20px;
-    background: #ddd;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-#progress {
-    width: 0;
-    height: 100%;
-    background: #4caf50;
-    transition: width 0.5s;
-}
-
-.referral-btn {
-    display: block;
     padding: 10px 20px;
-    margin: 20px 0;
-    font-size: 1.2em;
-    color: white;
-    background: linear-gradient(45deg, #1c92d2, #099ab7);
+    font-size: 16px;
+    margin: 5px;
+    background-color: #ffcc00;
     border: none;
-    border-radius: 25px;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
 }
 
-.referral-btn i {
-    margin-right: 10px;
-}
-
-.referral-btn:hover {
-    background: linear-gradient(45deg, #1c92d2, #69eacb);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
-}
-
-/* Adjustments for small devices (phones) */
-@media (max-width: 499px) {
-    body {
-        padding: 9px; /* Add some padding to body */
-    }
-
-    .game-container {
-        padding: 14px;
-        font-size: 13px; /* Smaller font size */
-    }
-
-    header {
-        padding: 4px;
-    }
-
-    #header-content {
-        flex-direction: column; /* Stack items vertically */
-    }
-
-    #username, #welcome-message {
-        font-size: 11px; /* Further reduce font size */
-    }
-
-    #leaderboard {
-        width: 100%; /* Full width for smaller screens */
-        right: 0; /* Align to the left */
-        top: 0; /* Adjust positioning */
-    }
-
-    #tasksList li {
-        font-size: 11px; /* Adjust task list item font size */
-    }
-
-    .icon {
-        width: 29px; /* Smaller icon size */
-        height: 29px;
-    }
-
-    button {
-        font-size: 13px; /* Adjust button font size */
-    }
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #222;
+    padding: 20px;
+    border: 2px solid white;
 }

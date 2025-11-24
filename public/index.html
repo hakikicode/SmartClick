@@ -2,54 +2,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-    <title>SmartClick Frenzy!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMART Click Game</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap">
-    <style>
-        body {
-            font-family: 'Fredoka One', cursive;
-        }
-    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>SmartClick Frenzy!</h1>
-        <div id="game">
-            <div id="info">
-                <p id="token-click"><img src="token-icon.png" alt="Token Icon" class="icon"> <span>0</span></p>
-                <p id="level"><img src="level-icon.png" alt="Level Icon" class="icon"> <span>1</span></p>
-                <p id="bonus"><img src="bonus-icon.png" alt="Bonus Icon" class="icon"> <span>0</span></p>
-            </div>
-            <div id="progress-bar">
-                <div id="progress"></div>
-                <img src="icon.png" loading="lazy" alt="Token Icon">
-                <img src="bonus-icon.png" loading="lazy" alt="Bonus Icon">
-                <button onclick="TelegramGameProxy.shareScore()">Share</button>
-            </div>
-            <div id="leaderboard">
-                <h2>Leaderboard</h2>
-                <ol id="leaderboard-list"></ol>
-            </div>
-            <div id="tapArea"></div>
-        </div>
-        <button id="referral-button" class="referral-btn" onclick="generateReferral()"><i class="fas fa-link"></i> Generate Referral Link</button>
-        <div id="social-share">
-            <button onclick="shareOnSocialMedia()">Share on Social Media</button>
-        </div>
-        <div id="mobile-menu">
-            <button onclick="startGame()"><i class="fas fa-play"></i><span>Play</span></button>
-            <button onclick="inviteFriend()"><i class="fas fa-user-friends"></i><span>Invite</span></button>
-            <button onclick="showTasks()"><i class="fas fa-tasks"></i><span>Tasks</span></button>
-        </div>
+    <div id="game-container">
+        <h1>SMART Click Game</h1>
+        <p>Click the falling SMART tokens to earn points!</p>
+        <div id="score-board">Score: <span id="score">0</span></div>
+        <div id="game-area"></div>
     </div>
-    <audio id="coin-sound" src="coin-click.mp3"></audio>
-    <audio id="bonus-sound" src="bonus-click.mp3"></audio>
-    <script src="game.js"></script>
+
+    <div id="menu">
+        <button onclick="showWalletInput()">Wallet</button>
+        <button onclick="showReferral()">Referral</button>
+        <button onclick="showStore()">Store</button>
+        <button onclick="showNFTs()">NFTs</button>
+        <button onclick="startGame()">Play</button>
+    </div>
+
+    <!-- Wallet Input -->
+    <div id="wallet-input" class="popup">
+        <h2>Enter Koii Wallet</h2>
+        <input type="text" id="wallet-address" placeholder="Your Koii Wallet Address">
+        <button onclick="saveWallet()">Save</button>
+        <button onclick="closePopup('wallet-input')">Close</button>
+    </div>
+
+    <!-- Referral -->
+    <div id="referral" class="popup">
+        <h2>Invite Friends</h2>
+        <p>Share this game with your friends and earn bonus SMART tokens!</p>
+        <button onclick="shareReferral()">Share</button>
+        <button onclick="closePopup('referral')">Close</button>
+    </div>
+
+    <!-- Store -->
+    <div id="store" class="popup">
+        <h2>Game Store</h2>
+        <p>Buy power-ups with SMART tokens.</p>
+        <button onclick="buyItem('doublePoints')">Double Earnings (50 SMART)</button>
+        <button onclick="buyItem('autoClick')">Auto Clicker (100 SMART)</button>
+        <button onclick="closePopup('store')">Close</button>
+    </div>
+
+    <!-- NFT Marketplace -->
+    <div id="nft-store" class="popup">
+        <h2>NFT Marketplace</h2>
+        <p>Buy NFTs to boost earnings.</p>
+        <button onclick="buyNFT('goldenToken')">Golden Token NFT (500 SMART) - 2x Points</button>
+        <button onclick="closePopup('nft-store')">Close</button>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
